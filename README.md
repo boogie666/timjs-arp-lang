@@ -19,19 +19,25 @@ The identity function:
 
 The factorial function:
 
-`[["function", "x", ["x", "x"]],
-  ["function", "x",
+```
+
+[["function", "x", ["x", "x"]],
+ ["function", "x",
    [["function", "f",
      ["function", "n", 
       ["if", "n",
        [["*", "n"], ["f", [["-", "n"], 1]]],
        1]]],
     ["function", "arg",
-     [["x", "x"], "arg"]]]]]`
+     [["x", "x"], "arg"]]]]]
 
-The fibonacci function
+```
 
-`[["function", "x", ["x", "x"]],
+The fibonacci function:
+
+```
+
+[["function", "x", ["x", "x"]],
   ["function", "x",
   [["function", "f",
     ["function", "n",
@@ -39,8 +45,9 @@ The fibonacci function
       "n",
       [["+", ["f", [["-", "n"], 1]]], ["f", [["-", "n"], 2]]]]]],
     ["function", "arg",
-    [["x", "x"], "arg"]]]]]`
-
+    [["x", "x"], "arg"]]]]]
+    
+```
 
 
 
