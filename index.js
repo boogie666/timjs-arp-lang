@@ -136,8 +136,10 @@ function eval_expr(expr, ctx){
 
 //we're gonna need
 // 'log' - to print stuff out
-// '-' - to do subtraction
-// '*' - to do multiplication
+// '+' - for addition
+// '-' - for subtraction
+// '*' - for multiplication
+// '<' - for less then
 
 function global_scope(name){
     if(name === "log"){
@@ -146,9 +148,24 @@ function global_scope(name){
             return console.log(item);
         };
     }
-    if(name === "-"){
+    if(name === "+"){
         // remember that our language only have single argument functions.
         // so a function with two args needs to be represented a function of the first args that returns a function with the second arg.
+        return function(a){
+            return function(b){
+                return a + b;
+            };
+        };
+    }
+
+    if(name === "<"){
+        return function(a){
+            return function(b){
+                return a < b ? 1 : 0;
+            };
+        };
+    }
+    if(name === "-"){
         return function(a){
             return function(b){
                 return a - b;
@@ -157,7 +174,6 @@ function global_scope(name){
     }
 
     if(name === "*"){
-        // see above the '-' function
         return function(a){
             return function(b){
                 return a * b;
@@ -168,6 +184,8 @@ function global_scope(name){
     throw name + " is not defined.";
 }
 
+
+
 // the ultimate test is factorial
 // the factorial function.
 
@@ -176,16 +194,29 @@ function global_scope(name){
 
 // this wierd thing is a y-combinator. it's basically recursion with when you only have higher order functions that can't have names.
 const factorial =
-[["function", "x", ["x", "x"]],
- ["function", "x",
-  [["function", "f",
-    ["function", "n", //if you sqint, this kinda looks like factorial
-     ["if", "n",
-      [["*", "n"], ["f", [["-", "n"], 1]]],
-      1]]],
-   ["function", "arg",
-    [["x", "x"], "arg"]]]]];
+      [["function", "x", ["x", "x"]],
+       ["function", "x",
+        [["function", "f",
+            ["function", "n", //if you sqint, this kinda looks like factorial
+            ["if", "n",
+            [["*", "n"], ["f", [["-", "n"], 1]]],
+            1]]],
+        ["function", "arg",
+            [["x", "x"], "arg"]]]]];
+
+const fib =
+      [["function", "x", ["x", "x"]],
+       ["function", "x",
+        [["function", "f",
+          ["function", "n",
+           ["if", [["<", "n"], 2],
+            "n",
+            [["+", ["f", [["-", "n"], 1]]], ["f", [["-", "n"], 2]]]]]],
+         ["function", "arg",
+          [["x", "x"], "arg"]]]]];
+
 
 // lastly exec the code and log our the result all in our language.
 // factorial(5) -> 120 :)
 eval_expr(["log", [factorial, 5]], global_scope); // prints out 120
+eval_expr(["log", [fib, 10]], global_scope); // prints out 120
