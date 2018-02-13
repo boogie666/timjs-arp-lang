@@ -1,12 +1,4 @@
 
-
-// a basic 'scope' for our language...
-// it will never have globals...
-// so it will thorw by default.
-function ctx(name){
-    throw name + " is undefined";
-}
-
 /**
    Eval function.
 
@@ -75,18 +67,24 @@ function eval_expr(expr, ctx){
     // and any valid expression in the thrid position
     // will define a function.
     if(expr[0] === "function" ){
+        //second element in the array is the name of the argument.
         const function_argument = expr[1];
+        //the thrid element is the expression in the body of the function.
         const function_body = expr[2];
         // we represent a function in our language
         // as a function in the host language (i.e. a javascript function)
+        // we could represent a function in any other way. but this is the simplest since js allows us to create functions on the fly.
         return function(argument){
+            //the body of the function needs to eval the 'body' and bind the name of the argument to a value
+
             //we create a new function to act as the local scope for our function.
             const local_scope = function(name_of_argument){
                 // first we need to look in the function_argument.
                 // if the function body uses it's own arguments
-                // we need to look them up by name
-                // and return the value associated with that argument.
+                // we need to look it up by name
+                // and return the value associated with the argument.
                 if (function_argument === name_of_argument){
+                    //the value of the argument is the value passed in to host function.
                     return argument;
                 }
 
@@ -100,10 +98,13 @@ function eval_expr(expr, ctx){
         };
     }
 
-    //lastly we need a way of actually calling function defined in our own language
+    // lastly we need a way of actually calling function defined in our language or even a native function.
     // here we'll do the lisp thing...
     // basically arrays === calling a function.
-    // ["inc" 1] is equivalnet to javascript's inc(1);
+    // ["inc", 1] is equivalnet to javascript's inc(1);
+    // since all functions can only have one argument and '+' is a function
+    // we'd do addition like so [["+", 1], 2].
+    // anything in the first position need's to be a function.
 
     // so if we ever see an array, we just assume that it's a function call at this point.
 
@@ -111,12 +112,16 @@ function eval_expr(expr, ctx){
     // but because we've already handled that case above.
     // we know that we our interperter ever get's here, we have a function call.
     if(expr instanceof Array){
-        const the_function = expr[0]; // the function is the first thing in the array
-        const evaluated_function = eval_expr(the_function, ctx); // we need to eval 'the_function', because it can be either a symbol or a annonymus function that we need to create into an actuall function.
-        const the_argument = expr[1]; //the arguments are everything else
-        const evaluated_argument = eval_expr(the_argument, ctx); // we need to eval the arguments before passing them to our function.
+        // the function is the first thing in the array
+        const the_function = expr[0];
+        // we need to eval 'the_function', because it can be either a symbol or a annonymus function that we need to create into an actual function.
+        const evaluated_function = eval_expr(the_function, ctx);
+        //the arguments are everything else
+        const the_argument = expr[1];
+        // we need to eval the argument before passing them to our function.
+        const evaluated_argument = eval_expr(the_argument, ctx);
         // remember, our functions, are represented by regular js functions.
-        // so we can just use the .apply method on them, passing in the evaluated arguments.
+        // so we can just call them, passing in the evaluated argument.
         return evaluated_function(evaluated_argument);
     }
 
@@ -127,22 +132,23 @@ function eval_expr(expr, ctx){
 
 
 //'tests'
+//let's define a global scope with some functions in it.
+
+//we're gonna need
+// 'log' - to print stuff out
+// '-' - to do subtraction
+// '*' - to do multiplication
+
 function global_scope(name){
     if(name === "log"){
+        // log will just use the host 'console.log'
         return function(item){
             return console.log(item);
         };
     }
-
-    if(name === "+"){
-        return function(a){
-            return function(b){
-                return a + b;
-            };
-        };
-    }
-
     if(name === "-"){
+        // remember that our language only have single argument functions.
+        // so a function with two args needs to be represented a function of the first args that returns a function with the second arg.
         return function(a){
             return function(b){
                 return a - b;
@@ -151,6 +157,7 @@ function global_scope(name){
     }
 
     if(name === "*"){
+        // see above the '-' function
         return function(a){
             return function(b){
                 return a * b;
@@ -161,20 +168,24 @@ function global_scope(name){
     throw name + " is not defined.";
 }
 
+// the ultimate test is factorial
+// the factorial function.
+
+// the factorial functions is recursive. but our language does not have recursion.
+// but since we have higher order functions, we can fake it.
+
+// this wierd thing is a y-combinator. it's basically recursion with when you only have higher order functions that can't have names.
 const factorial =
 [["function", "x", ["x", "x"]],
  ["function", "x",
   [["function", "f",
-    ["function", "n",
+    ["function", "n", //if you sqint, this kinda looks like factorial
      ["if", "n",
       [["*", "n"], ["f", [["-", "n"], 1]]],
       1]]],
    ["function", "arg",
     [["x", "x"], "arg"]]]]];
 
-
+// lastly exec the code and log our the result all in our language.
+// factorial(5) -> 120 :)
 eval_expr(["log", [factorial, 5]], global_scope); // prints out 120
-
-
-// break for thunderus applause :)
-
