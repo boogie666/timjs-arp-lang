@@ -58,9 +58,9 @@ This whole think is shamelessly stolen from other places.
 
 Credits go to:
 
-[William Byrd on "The Most Beautiful Program Ever Written"](https://www.youtube.com/watch?v=OyfBQmvr2Hc)
+[William Byrd on "The Most Beautiful Program Ever Written"](https://www.youtube.com/watch?v=OyfBQmvr2Hc) - He does basically exactly this. but in Scheme
 
-[Functional programming - Bodil Stokke](https://www.youtube.com/watch?v=DHubfS8E--o)
+[Functional programming - Bodil Stokke](https://www.youtube.com/watch?v=DHubfS8E--o) - She does this as well but in Clojure.
 
 
 
