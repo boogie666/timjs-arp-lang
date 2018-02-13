@@ -38,7 +38,7 @@ The fibonacci function:
 ```
 
 [["function", "x", ["x", "x"]],
-  ["function", "x",
+ ["function", "x",
   [["function", "f",
     ["function", "n",
       ["if", [["<", "n"], 2],
