@@ -63,4 +63,4 @@ Credits go to:
 [Functional programming - Bodil Stokke](https://www.youtube.com/watch?v=DHubfS8E--o) - She does this as well but in Clojure.
 
 
-
+[Structure and Interpretation of Computer Programs](https://www.youtube.com/playlist?list=PL7BcsI5ueSNFPCEisbaoQ0kXIDX9rR5FF) - MIT Course
