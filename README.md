@@ -76,7 +76,7 @@ Here are some examples of functions in ARP to show its syntax.
 The identity function:
 
 ```
-["identity", "x", "x"]
+["function", "x", "x"]
 ```
 
 The factorial function:
