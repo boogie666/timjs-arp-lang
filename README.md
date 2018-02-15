@@ -48,7 +48,6 @@ would become (still in js)
        return a + b;
     }; 
  }
- 
 ```
 
 in ARP that would translate to 
