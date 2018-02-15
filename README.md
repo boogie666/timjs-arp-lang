@@ -1,7 +1,7 @@
 # arp-lang
 
 
-## A pritty bad, really slow, poorly coded, but turring complete lisp dialect :)
+## A pritty bad, really slow, poorly coded, but turing complete lisp dialect :)
 
 
 ### The name - ARP
