@@ -193,18 +193,20 @@ function global_scope(name){
 // but since we have higher order functions, we can fake it.
 
 // this wierd thing is a y-combinator. it's basically recursion with when you only have higher order functions that can't have names.
-const factorial =
+const factorial_source_code =
+  ["log", [
       [["function", "x", ["x", "x"]],
        ["function", "x",
         [["function", "f",
             ["function", "n", //if you sqint, this kinda looks like factorial
-            ["if", "n",
-            [["*", "n"], ["f", [["-", "n"], 1]]],
-            1]]],
+              ["if", "n",
+                [["*", "n"], ["f", [["-", "n"], 1]]],
+                1]]],
         ["function", "arg",
-            [["x", "x"], "arg"]]]]];
+            [["x", "x"], "arg"]]]]], 5]];
 
-const fib =
+const fib_source_code =
+  ["log", [
       [["function", "x", ["x", "x"]],
        ["function", "x",
         [["function", "f",
@@ -213,10 +215,12 @@ const fib =
             "n",
             [["+", ["f", [["-", "n"], 1]]], ["f", [["-", "n"], 2]]]]]],
          ["function", "arg",
-          [["x", "x"], "arg"]]]]];
+          [["x", "x"], "arg"]]]]], 10]];
 
 
 // lastly exec the code and log our the result all in our language.
+
 // factorial(5) -> 120 :)
-eval_expr(["log", [factorial, 5]], global_scope); // prints out 120
-eval_expr(["log", [fib, 10]], global_scope); // prints out 120
+eval_expr(factorial_source_code, global_scope); // prints out 120
+// fibonaci(10) -> 55 :)
+eval_expr(fib_source_code, global_scope); // prints out 55
