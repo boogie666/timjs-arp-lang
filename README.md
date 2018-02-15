@@ -8,7 +8,7 @@
 
 As you might know, LISP stands for LISt Processor. Since we're going to use javascript as our host language and given that javascript has arrays, as opposed to lists...
 
-Array PRocessor
+ARray Processor
 
 ### Features
 
