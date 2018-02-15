@@ -28,7 +28,7 @@ But it does have the nicest features of any high level language.
 - Lexical Scoping - i.e. function scope.
 
 
-Higher order functions make up for quite a few failing of the language.
+Higher order functions make up for at least two failings of the language.
 
 For example:
 
