@@ -110,7 +110,7 @@ The fibonacci function:
 
 
 
-### Resouces
+### Resources
 
 This whole think is shamelessly stolen from other places.
 
