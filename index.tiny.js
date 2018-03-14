@@ -43,49 +43,18 @@ function eval_expr(expr, ctx){
 // '<' - for less then
 
 function global_scope(name){
-    if(name === "log"){
-        // log will just use the host 'console.log'
-        return function(item){
-            return console.log(item);
-        };
-    }
-    if(name === "+"){
-        // remember that our language only have single argument functions.
-        // so a function with two args needs to be represented a function of the first args that returns a function with the second arg.
-        return function(a){
-            return function(b){
-                return a + b;
-            };
-        };
-    }
-
-    if(name === "<"){
-        return function(a){
-            return function(b){
-                return a < b ? 1 : 0;
-            };
-        };
-    }
-    if(name === "-"){
-        return function(a){
-            return function(b){
-                return a - b;
-            };
-        };
-    }
-
-    if(name === "*"){
-        return function(a){
-            return function(b){
-                return a * b;
-            };
-        };
-    }
-
+    if(name === "log")
+        return item => console.log(item);
+    if(name === "+")
+        return a => b => a + b;
+    if(name === "<")
+        return a => b => a < b ? 1 : 0;
+    if(name === "-")
+        return a => b => a - b;
+    if(name === "*")
+        return a => b => a * b;
     throw name + " is not defined.";
 }
-
-
 
 // the ultimate test is factorial
 // the factorial function.
