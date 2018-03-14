@@ -30,18 +30,6 @@ function eval_expr(expr, ctx){
 }
 
 
-
-
-//'tests'
-//let's define a global scope with some functions in it.
-
-//we're gonna need
-// 'log' - to print stuff out
-// '+' - for addition
-// '-' - for subtraction
-// '*' - for multiplication
-// '<' - for less then
-
 function global_scope(name){
     if(name === "log")
         return item => console.log(item);
@@ -56,13 +44,6 @@ function global_scope(name){
     throw name + " is not defined.";
 }
 
-// the ultimate test is factorial
-// the factorial function.
-
-// the factorial functions is recursive. but our language does not have recursion.
-// but since we have higher order functions, we can fake it.
-
-// this wierd thing is a y-combinator. it's basically recursion with when you only have higher order functions that can't have names.
 const factorial_source_code =
   ["log", [
       [["function", "x", ["x", "x"]],
@@ -87,8 +68,6 @@ const fib_source_code =
          ["function", "arg",
           [["x", "x"], "arg"]]]]], 10]];
 
-
-// lastly exec the code and log our the result all in our language.
 
 // factorial(5) -> 120 :)
 eval_expr(factorial_source_code, global_scope); // prints out 120
